@@ -1,0 +1,5 @@
+# Tells Vercel where the FastAPI app lives inside this project so the framework
+# preset loads api/index.py (see https://vercel.com/docs/frameworks/backend/fastapi).
+# Runtime dependencies stay in requirements.txt.
+[tool.vercel]
+entrypoint = "api.index:app"
