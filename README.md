@@ -39,7 +39,9 @@ features alone (CV Macro-F1 0.9395) and is not part of the final model.
 | `artifacts/word2vec.model` | gensim Word2Vec (native format) |
 | `artifacts/results.json`, `metrics_val.csv`, `metrics_benchmark.csv`, `metrics_test.csv` | Metrics + hyperparameters |
 | `reports/figures/` | 6 figures: EDA, benchmark heatmap, confusion matrix |
-| `requirements.txt` | Pinned dependencies |
+| `requirements.txt` | Pinned dependencies (notebook / training env) |
+| `backend/` | FastAPI inference service for Vercel — `/health` and `/predict` |
+| `frontend/` | Next.js UI for Vercel (intent analyzer) |
 
 ## Quick start
 
@@ -57,6 +59,45 @@ features alone (CV Macro-F1 0.9395) and is not part of the final model.
     model.predict([pp.clean_text("I CAN'T cancel my ORDER {{Order Number}}")])
 
 Loading `bestmodel.pkl` requires `vectorizers.py` (and `gensim`) importable on the path.
+
+## Deployment - two Vercel services
+
+The repository ships two independently deployable services. On Vercel, create **two
+projects** from this repo and set each project's **Root Directory**:
+
+| Project | Root Directory | Framework | Env var |
+|---|---|---|---|
+| Backend | `backend` | FastAPI (Python) | `ALLOWED_ORIGINS` (optional; defaults to `*`) |
+| Frontend | `frontend` | Next.js | `NEXT_PUBLIC_BACKEND_URL` (the backend URL) |
+
+### Backend (`backend/`)
+
+- `api/index.py` exports the FastAPI `app`: `GET /health` and `POST /predict`
+  (`{"text": "..."}` -> `{intent, category, confidence, top_k, latency_ms}`).
+- The Vercel entrypoint is declared in `backend/pyproject.toml`
+  (`[tool.vercel] entrypoint = "api.index:app"`); `backend/vercel.json` sets the
+  function timeout.
+- Inference reuses `preprocessing.clean_text` and loads `artifacts/bestmodel.pkl`
+  plus `artifacts/intent_map.json`. Pins in `backend/requirements.txt` match the
+  training env so the pipeline unpickles without version skew.
+
+Local run:
+
+    cd backend
+    python -m uvicorn api.index:app --port 8000
+
+### Frontend (`frontend/`)
+
+- Next.js (App Router) UI with a live backend health pill, sample-query chips, a
+  routing-trace result view, and inline error handling.
+- Reads `NEXT_PUBLIC_BACKEND_URL`, falling back to `http://127.0.0.1:8000` for
+  local development (see `frontend/.env.example`).
+
+Local run:
+
+    cd frontend
+    npm install
+    npm run dev
 
 ## Notes for modelling
 

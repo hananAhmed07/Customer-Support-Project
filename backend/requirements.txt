@@ -1,0 +1,13 @@
+# Runtime dependencies for the Vercel FastAPI function (backend/).
+#
+# The model stack pins match the environment the pipeline was trained in (conda env
+# `ml_env`) so artifacts/bestmodel.pkl unpickles without version skew. The trained
+# notebook's requirements.txt at the repo root intentionally differs (it pins newer
+# libraries and lives outside this deployable service).
+fastapi>=0.115,<1.0
+uvicorn>=0.30,<1.0
+joblib==1.6.0
+numpy==2.4.6
+scipy==1.17.1
+scikit-learn==1.5.2
+gensim==4.4.0
