@@ -1,5 +1,23 @@
-# Tells Vercel where the FastAPI app lives inside this project so the framework
-# preset loads api/index.py (see https://vercel.com/docs/frameworks/backend/fastapi).
-# Runtime dependencies stay in requirements.txt.
+[project]
+name = "customer-support-backend"
+version = "0.1.0"
+description = "FastAPI inference service for the Bitext customer-support intent classifier."
+requires-python = ">=3.11,<3.13"
+
+# Single source of truth for runtime dependencies (Vercel installs these with uv).
+# Pins match the environment the pipeline was trained in (conda env `ml_env`) so
+# artifacts/bestmodel.pkl unpickles without version skew.
+dependencies = [
+    "fastapi>=0.115,<1.0",
+    "uvicorn>=0.30,<1.0",
+    "joblib==1.6.0",
+    "numpy==2.4.6",
+    "scipy==1.17.1",
+    "scikit-learn==1.5.2",
+    "gensim==4.4.0",
+]
+
+# Tells Vercel where the FastAPI app lives so the framework preset loads
+# api/index.py (see https://vercel.com/docs/frameworks/backend/fastapi).
 [tool.vercel]
 entrypoint = "api.index:app"
