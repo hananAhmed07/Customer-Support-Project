@@ -85,21 +85,21 @@
       "model": "LinearSVC",
       "val macro-F1": 0.9994,
       "val accuracy": 0.9996,
-      "seconds": 5.7
+      "seconds": 6.3
     },
     {
       "feature": "tfidf_char_w2v",
       "model": "LogisticRegression",
       "val macro-F1": 0.9954,
       "val accuracy": 0.9959,
-      "seconds": 5.5
+      "seconds": 7.6
     },
     {
       "feature": "tfidf_char_w2v",
       "model": "LinearSVC",
       "val macro-F1": 0.9996,
       "val accuracy": 0.9996,
-      "seconds": 10.7
+      "seconds": 14.2
     }
   ]
 }
