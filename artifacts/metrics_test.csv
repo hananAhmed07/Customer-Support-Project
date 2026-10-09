@@ -1,2 +1,2 @@
 model,params,accuracy,macro-F1,weighted-F1,errors,n_test
-LinearSVC,"{""C"": 10.0, ""class_weight"": null}",0.9992,0.9992,0.9992,2,2428
+LinearSVC,"{""C"": 10.0, ""class_weight"": null}",0.9984,0.998,0.9984,4,2428

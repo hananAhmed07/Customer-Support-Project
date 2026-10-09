@@ -1,5 +1,6 @@
 {
   "seed": 42,
+  "feature_set": "char_wb(2,5) TF-IDF ∪ Word2Vec(128, mean-pooled)",
   "splits": {
     "train": 19419,
     "val": 2427,
@@ -11,37 +12,36 @@
     "C": 10.0,
     "class_weight": null
   },
-  "cv_macro_f1": 0.9988,
+  "cv_macro_f1": 0.9984,
   "test_metrics": {
     "model": "LinearSVC",
     "params": "{\"C\": 10.0, \"class_weight\": null}",
-    "accuracy": 0.9992,
-    "macro-F1": 0.9992,
-    "weighted-F1": 0.9992,
-    "errors": 2,
+    "accuracy": 0.9984,
+    "macro-F1": 0.998,
+    "weighted-F1": 0.9984,
+    "errors": 4,
     "n_test": 2428
+  },
+  "complementnb_char_only": {
+    "params": {
+      "alpha": 0.1
+    },
+    "cv_macro_f1": 0.9395
   },
   "grid_search": [
     {
       "model": "LinearSVC",
       "best params": "{\"C\": 10.0, \"class_weight\": null}",
-      "CV macro-F1 (5-fold)": 0.9988,
-      "val macro-F1": 0.999,
-      "val accuracy": 0.9992
+      "CV macro-F1 (5-fold)": 0.9984,
+      "val macro-F1": 0.9996,
+      "val accuracy": 0.9996
     },
     {
       "model": "LogisticRegression",
-      "best params": "{\"C\": 10.0, \"class_weight\": \"balanced\"}",
-      "CV macro-F1 (5-fold)": 0.9981,
-      "val macro-F1": 0.999,
-      "val accuracy": 0.9992
-    },
-    {
-      "model": "ComplementNB",
-      "best params": "{\"alpha\": 0.1}",
-      "CV macro-F1 (5-fold)": 0.9831,
-      "val macro-F1": 0.9817,
-      "val accuracy": 0.9835
+      "best params": "{\"C\": 10.0, \"class_weight\": null}",
+      "CV macro-F1 (5-fold)": 0.9944,
+      "val macro-F1": 0.9918,
+      "val accuracy": 0.9922
     }
   ],
   "benchmark": [
@@ -60,18 +60,11 @@
       "seconds": 0.6
     },
     {
-      "feature": "tfidf_word",
-      "model": "XGBoost",
-      "val macro-F1": 0.9794,
-      "val accuracy": 0.9806,
-      "seconds": 66.9
-    },
-    {
       "feature": "tfidf_char",
       "model": "LogisticRegression",
       "val macro-F1": 0.9971,
       "val accuracy": 0.9975,
-      "seconds": 2.3
+      "seconds": 2.2
     },
     {
       "feature": "tfidf_char",
@@ -79,13 +72,6 @@
       "val macro-F1": 0.9987,
       "val accuracy": 0.9992,
       "seconds": 4.7
-    },
-    {
-      "feature": "tfidf_char",
-      "model": "XGBoost",
-      "val macro-F1": 0.9956,
-      "val accuracy": 0.9963,
-      "seconds": 486.3
     },
     {
       "feature": "tfidf_word_char",
@@ -99,20 +85,13 @@
       "model": "LinearSVC",
       "val macro-F1": 0.9994,
       "val accuracy": 0.9996,
-      "seconds": 5.5
-    },
-    {
-      "feature": "tfidf_word_char",
-      "model": "XGBoost",
-      "val macro-F1": 0.9946,
-      "val accuracy": 0.9951,
-      "seconds": 581.7
+      "seconds": 5.7
     },
     {
       "feature": "tfidf_char_w2v",
       "model": "LogisticRegression",
-      "val macro-F1": 0.9941,
-      "val accuracy": 0.9946,
+      "val macro-F1": 0.9954,
+      "val accuracy": 0.9959,
       "seconds": 5.5
     },
     {
@@ -121,13 +100,6 @@
       "val macro-F1": 0.9996,
       "val accuracy": 0.9996,
       "seconds": 10.7
-    },
-    {
-      "feature": "tfidf_char_w2v",
-      "model": "XGBoost",
-      "val macro-F1": 0.9941,
-      "val accuracy": 0.9951,
-      "seconds": 428.7
     }
   ]
 }

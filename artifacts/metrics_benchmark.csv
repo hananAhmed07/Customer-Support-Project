@@ -1,13 +1,9 @@
 feature,model,val macro-F1,val accuracy,seconds
 tfidf_word,LogisticRegression,0.9916,0.9926,0.9
 tfidf_word,LinearSVC,0.9922,0.9934,0.6
-tfidf_word,XGBoost,0.9794,0.9806,66.9
-tfidf_char,LogisticRegression,0.9971,0.9975,2.3
+tfidf_char,LogisticRegression,0.9971,0.9975,2.2
 tfidf_char,LinearSVC,0.9987,0.9992,4.7
-tfidf_char,XGBoost,0.9956,0.9963,486.3
 tfidf_word_char,LogisticRegression,0.9979,0.9984,2.4
-tfidf_word_char,LinearSVC,0.9994,0.9996,5.5
-tfidf_word_char,XGBoost,0.9946,0.9951,581.7
-tfidf_char_w2v,LogisticRegression,0.9941,0.9946,5.5
+tfidf_word_char,LinearSVC,0.9994,0.9996,5.7
+tfidf_char_w2v,LogisticRegression,0.9954,0.9959,5.5
 tfidf_char_w2v,LinearSVC,0.9996,0.9996,10.7
-tfidf_char_w2v,XGBoost,0.9941,0.9951,428.7

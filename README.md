@@ -12,13 +12,16 @@ Bitext dataset.
 | Split | Stratified on `intent`, 80/10/10, `random_state=42` (19,419 / 2,427 / 2,428), no overlap |
 | Stop words | **Not removed** (val Macro-F1 0.9916 vs 0.9874 when removed) |
 | Lemmatization / stemming | **Not used** (0.9913 / 0.9906 vs 0.9916 for none) |
-| Features | TF-IDF **word (1,2) + char_wb (2,5) union**, 15,080 features, fit on train only |
-| Model | LinearSVC `C=10`, `class_weight=None` (5-fold CV Macro-F1 0.9988; test acc/Macro-F1 0.9992, 2 errors / 2,428) |
+| Features | **char_wb (2,5) TF-IDF ∪ Word2Vec (128-d, mean-pooled)** — 10,234 features, fit on train only |
+| Model | char TF-IDF ∪ Word2Vec → LinearSVC `C=10`, `class_weight=None` (5-fold CV Macro-F1 0.9984; test acc 0.9984 / Macro-F1 0.998, 4 errors / 2,428) |
 
-Why char n-grams: under synthetic typo noise, char-only TF-IDF is the most robust
-representation (val accuracy 0.9699 @ 10% typos and 0.8879 @ 20%, vs 0.8109 and
-0.8307 for word/word+char). Word+char wins on clean text (val Macro-F1 0.9979), so
-the union is the exported feature set.
+Why char TF-IDF + Word2Vec: char n-grams are the most typo-robust representation, and
+adding Word2Vec (mean-pooled 128-d) gives the best validation score — the benchmark
+ranks char+w2v LinearSVC 0.9996 > word+char 0.9994 > char 0.9987 (val Macro-F1). The
+exported feature set is therefore char_wb (2,5) TF-IDF ∪ Word2Vec.
+
+ComplementNB requires non-negative inputs, so it is evaluated on the char TF-IDF
+features alone (CV Macro-F1 0.9395) and is not part of the final model.
 
 ## Project structure
 
@@ -27,10 +30,12 @@ the union is the exported feature set.
 | `Bitext_Sample_Customer_Support_Training_Dataset_27K_responses-v11.csv` | Raw dataset |
 | `organized.ipynb` | End-to-end notebook: EDA, preprocessing, split, features, grid search, evaluation, export |
 | `preprocessing.py` | `clean_text` (single source of truth, imported by the notebook) |
+| `vectorizers.py` | `Word2VecVectorizer` (mean-pooled embeddings as a scikit-learn transformer; required to load `bestmodel.pkl`) |
 | `processed_data/` | `train.csv`, `val.csv`, `test.csv` (use `clean_instruction` as input) |
-| `artifacts/bestmodel.pkl` | **Final** full pipeline: word+char `FeatureUnion` + LinearSVC(C=10) |
-| `artifacts/tfidfvectorizer.pkl` | Fitted word+char TF-IDF union (15,080 features) |
-| `artifacts/linearsvc_pipeline.pkl`, `logreg_pipeline.pkl`, `complementnb_pipeline.pkl` | Alternative trained pipelines |
+| `artifacts/bestmodel.pkl` | **Final** full pipeline: char TF-IDF ∪ Word2Vec `FeatureUnion` + LinearSVC(C=10); takes cleaned text |
+| `artifacts/features_union.pkl` | Fitted char TF-IDF ∪ Word2Vec union (10,234 features) |
+| `artifacts/linearsvc_pipeline.pkl`, `logreg_pipeline.pkl` | Alternative pipelines on the combined features |
+| `artifacts/complementnb_pipeline.pkl` | ComplementNB pipeline (char TF-IDF only — needs non-negative input) |
 | `artifacts/word2vec.model` | gensim Word2Vec (native format) |
 | `artifacts/results.json`, `metrics_val.csv`, `metrics_benchmark.csv`, `metrics_test.csv` | Metrics + hyperparameters |
 | `reports/figures/` | 6 figures: EDA, benchmark heatmap, confusion matrix |
@@ -50,6 +55,8 @@ the union is the exported feature set.
 
     # For raw text, clean it first (same function used in training):
     model.predict([pp.clean_text("I CAN'T cancel my ORDER {{Order Number}}")])
+
+Loading `bestmodel.pkl` requires `vectorizers.py` (and `gensim`) importable on the path.
 
 ## Notes for modelling
 
