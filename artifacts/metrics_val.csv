@@ -1,0 +1,4 @@
+model,best params,CV macro-F1 (5-fold),val macro-F1,val accuracy
+LinearSVC,"{""C"": 10.0, ""class_weight"": null}",0.9988,0.999,0.9992
+LogisticRegression,"{""C"": 10.0, ""class_weight"": ""balanced""}",0.9981,0.999,0.9992
+ComplementNB,"{""alpha"": 0.1}",0.9831,0.9817,0.9835
