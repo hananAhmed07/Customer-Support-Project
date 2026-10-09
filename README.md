@@ -78,13 +78,15 @@ projects** from this repo and set each project's **Root Directory**:
   (`[tool.vercel] entrypoint = "api.index:app"`); `backend/vercel.json` sets the
   function timeout.
 - Inference reuses `preprocessing.clean_text` and loads `artifacts/bestmodel.pkl`
-  plus `artifacts/intent_map.json`. Pins in `backend/requirements.txt` match the
-  training env so the pipeline unpickles without version skew.
+  plus `artifacts/intent_map.json`. Runtime dependencies (and their pins, which
+  match the training env) live in `[project].dependencies` in
+  `backend/pyproject.toml`; `backend/uv.lock` pins the full resolved graph.
 
 Local run:
 
     cd backend
-    python -m uvicorn api.index:app --port 8000
+    uv sync
+    uv run uvicorn api.index:app --port 8000
 
 ### Frontend (`frontend/`)
 
