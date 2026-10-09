@@ -10,21 +10,30 @@ Bitext dataset.
 | Cleaning | Lowercase, whitespace normalisation, placeholders `{{Order Number}}` -> `ph_order_number` |
 | Duplicates | Removed after cleaning (26,872 -> 24,274 rows); no label conflicts found |
 | Split | Stratified on `intent`, 80/10/10, `random_state=42` (19,419 / 2,427 / 2,428), no overlap |
-| Stop words | **Not removed** (Macro-F1 0.9912 vs ~0.974 when removed) |
-| Lemmatization / stemming | **Not used** (no gain over baseline) |
-| Features | TF-IDF Char_wb(2-5) only, 10,106 features, fit on train only |
+| Stop words | **Not removed** (val Macro-F1 0.9916 vs 0.9874 when removed) |
+| Lemmatization / stemming | **Not used** (0.9913 / 0.9906 vs 0.9916 for none) |
+| Features | TF-IDF **word (1,2) + char_wb (2,5) union**, 15,080 features, fit on train only |
+| Model | LinearSVC `C=10`, `class_weight=None` (5-fold CV Macro-F1 0.9988; test acc/Macro-F1 0.9992, 2 errors / 2,428) |
 
-Why Char n-grams: under synthetic typo noise (50% of words), Macro-F1 drops 0.012 for char n-grams vs 0.119 for word n-grams. Char-only matched or beat Word+Char at every noise level. `artifacts/tfidf_word_char.joblib` is kept for comparison only.
+Why char n-grams: under synthetic typo noise, char-only TF-IDF is the most robust
+representation (val accuracy 0.9699 @ 10% typos and 0.8879 @ 20%, vs 0.8109 and
+0.8307 for word/word+char). Word+char wins on clean text (val Macro-F1 0.9979), so
+the union is the exported feature set.
 
 ## Project structure
 
 | Path | Description |
 |---|---|
-| `Bitext_Sample_..._v11.csv` | Raw dataset |
-| `nlp_preprocessing.ipynb` | Cleaning, split, preprocessing experiments, vectorizer |
-| `processed_data/` | `train.csv`, `val.csv`, `test.csv` (use `instruction_clean` as input) |
-| `artifacts/tfidf_char.joblib` | **Final** fitted char n-gram TF-IDF vectorizer |
-| `artifacts/tfidf_word_char.joblib` | Word+Char vectorizer (comparison only) |
+| `Bitext_Sample_Customer_Support_Training_Dataset_27K_responses-v11.csv` | Raw dataset |
+| `organized.ipynb` | End-to-end notebook: EDA, preprocessing, split, features, grid search, evaluation, export |
+| `preprocessing.py` | `clean_text` (single source of truth, imported by the notebook) |
+| `processed_data/` | `train.csv`, `val.csv`, `test.csv` (use `clean_instruction` as input) |
+| `artifacts/bestmodel.pkl` | **Final** full pipeline: word+char `FeatureUnion` + LinearSVC(C=10) |
+| `artifacts/tfidfvectorizer.pkl` | Fitted word+char TF-IDF union (15,080 features) |
+| `artifacts/linearsvc_pipeline.pkl`, `logreg_pipeline.pkl`, `complementnb_pipeline.pkl` | Alternative trained pipelines |
+| `artifacts/word2vec.model` | gensim Word2Vec (native format) |
+| `artifacts/results.json`, `metrics_val.csv`, `metrics_benchmark.csv`, `metrics_test.csv` | Metrics + hyperparameters |
+| `reports/figures/` | 6 figures: EDA, benchmark heatmap, confusion matrix |
 | `requirements.txt` | Pinned dependencies |
 
 ## Quick start
@@ -32,14 +41,21 @@ Why Char n-grams: under synthetic typo noise (50% of words), Macro-F1 drops 0.01
     pip install -r requirements.txt
 
     import joblib, pandas as pd
-    tfidf = joblib.load("artifacts/tfidf_char.joblib")
-    train = pd.read_csv("processed_data/train.csv")
-    X_train = tfidf.transform(train["instruction_clean"])
-    y_train = train["intent"]   # or "category"
+    from sklearn.pipeline import Pipeline
+    import preprocessing as pp
+
+    model = joblib.load("artifacts/bestmodel.pkl")
+    df = pd.read_csv("processed_data/test.csv")
+    preds = model.predict(df["clean_instruction"])
+
+    # For raw text, clean it first (same function used in training):
+    model.predict([pp.clean_text("I CAN'T cancel my ORDER {{Order Number}}")])
 
 ## Notes for modelling
 
 - Do not use `response` as a feature (data leakage).
 - Tune on `val.csv`; use `test.csv` for final evaluation only.
-- `cancel_order` has only 436 rows after deduplication: use Macro-F1 and
-  consider `class_weight="balanced"`.''''
+- `cancel_order` has only 436 rows after deduplication: use Macro-F1. The selected
+  model uses `class_weight=None` (balanced weighting was tested and scored lower).
+- The `.pkl` artifacts are the handoff point for the deployment teammate; deployment
+  must call `preprocessing.clean_text` on raw input before `predict`.
