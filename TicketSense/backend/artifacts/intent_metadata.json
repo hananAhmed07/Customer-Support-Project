@@ -1,0 +1,218 @@
+{
+  "cancel_order": {
+    "category": "ORDER",
+    "samples": [
+      "want help to cancel order {{Order Number}}",
+      "I do not want my last bloody item, cancel order {{Order Number}}",
+      "i have a question about cancelling oorder {{Order Number}}"
+    ]
+  },
+  "change_order": {
+    "category": "ORDER",
+    "samples": [
+      "i need help changing some articles of order {{Order Number}}",
+      "I want to change purchase {{Order Number}}",
+      "how do I correct purchase {{Order Number}}?"
+    ]
+  },
+  "change_shipping_address": {
+    "category": "SHIPPING",
+    "samples": [
+      "supports trying to update my address",
+      "where can i get information about editing the address",
+      "i have issues editing the address"
+    ]
+  },
+  "check_cancellation_fee": {
+    "category": "CANCEL",
+    "samples": [
+      "where do i check the cancellation penalty",
+      "can i see the early termination fees",
+      "could you help me see the withdrawal charges?"
+    ]
+  },
+  "check_invoice": {
+    "category": "INVOICE",
+    "samples": [
+      "I have got to take a quick look at my invoice #37777",
+      "i have got to check the invoces from {{Person Name}}",
+      "i do not know  what to do to look for my bill #00108"
+    ]
+  },
+  "check_payment_methods": {
+    "category": "PAYMENT",
+    "samples": [
+      "help me check ur allowed payment modalities",
+      "assistance to check what payment methods you accept",
+      "how to check your accepted payment modalities?"
+    ]
+  },
+  "check_refund_policy": {
+    "category": "REFUND",
+    "samples": [
+      "help checking in which cases can I ask for reimbursements",
+      "I try to see in which cases can I request a reimbursement",
+      "see in which situations can I ask for a reimbursement"
+    ]
+  },
+  "complaint": {
+    "category": "FEEDBACK",
+    "samples": [
+      "help me file a customer complaint",
+      "how to lodge a customer claim against your organization?",
+      "help filing a damn customer reclamation"
+    ]
+  },
+  "contact_customer_service": {
+    "category": "CONTACT",
+    "samples": [
+      "can I talk to customer uspport?",
+      "do you have a free number to call cjstomer service?",
+      "i want assistance talking to customer service"
+    ]
+  },
+  "contact_human_agent": {
+    "category": "CONTACT",
+    "samples": [
+      "I need help to talk to a person",
+      "I need help to speak to someond",
+      "could I talk to someone?"
+    ]
+  },
+  "create_account": {
+    "category": "ACCOUNT",
+    "samples": [
+      "can you give me information about opening {{Account Type}} accounts?",
+      "I don't know what I have to do to create a {{Account Category}} account",
+      "I have not signed up yet, how to create a {{Account Type}} account?"
+    ]
+  },
+  "delete_account": {
+    "category": "ACCOUNT",
+    "samples": [
+      "I don't know what I need to do to close the {{Account Type}} account",
+      "will you give me information about pro account terminations?",
+      "problem with pro account removals"
+    ]
+  },
+  "delivery_options": {
+    "category": "DELIVERY",
+    "samples": [
+      "can i place an order frim {{Delivery Country}}",
+      "can I check what shipping methods I have?",
+      "I want assistance seeing the methods for shipment"
+    ]
+  },
+  "delivery_period": {
+    "category": "DELIVERY",
+    "samples": [
+      "help me to see how long it takes for the article to arrive",
+      "assistance to check hw soon can i expect the order",
+      "I want to see how long the shipping takes"
+    ]
+  },
+  "edit_account": {
+    "category": "ACCOUNT",
+    "samples": [
+      "I don't know how to correct the data included on my account",
+      "edit information on gold account",
+      "update standard account"
+    ]
+  },
+  "get_invoice": {
+    "category": "INVOICE",
+    "samples": [
+      "get invoice #12588",
+      "i dont know what i need  to do to download my bill #37777",
+      "wanna download my invoices from {{Person Name}} help me"
+    ]
+  },
+  "get_refund": {
+    "category": "REFUND",
+    "samples": [
+      "I am trying to receive a compensation",
+      "i want my rebate of money",
+      "I have got to reuqest rebates of money"
+    ]
+  },
+  "newsletter_subscription": {
+    "category": "SUBSCRIPTION",
+    "samples": [
+      "help me signing up to the newsletter",
+      "i need help to unsubscribe to the company newsleter",
+      "help unsubscribing from your newsletter"
+    ]
+  },
+  "payment_issue": {
+    "category": "PAYMENT",
+    "samples": [
+      "where do i notify of a problem with online payments",
+      "can ya help me informing  of problems with online payment",
+      "could uhelp me report a trouble with online payment"
+    ]
+  },
+  "place_order": {
+    "category": "ORDER",
+    "samples": [
+      "i have got to buy some items how can i do it",
+      "assistance to order some  of ur item",
+      "how could i buy esveral products"
+    ]
+  },
+  "recover_password": {
+    "category": "ACCOUNT",
+    "samples": [
+      "i cannot retrieve the passqord of my profile",
+      "can you help me recover my user profile password?",
+      "i want heop to recover my pass"
+    ]
+  },
+  "registration_problems": {
+    "category": "ACCOUNT",
+    "samples": [
+      "I can't notify of problems with a registration",
+      "i need assistance notifying of  signup problems",
+      "assistance informing of a signup problem"
+    ]
+  },
+  "review": {
+    "category": "FEEDBACK",
+    "samples": [
+      "i have to write a comment for a service how can i do it",
+      "I do not know how I can submit my feedback for your products",
+      "want help to submit feedback for ur company"
+    ]
+  },
+  "set_up_shipping_address": {
+    "category": "SHIPPING",
+    "samples": [
+      "I need to set up a secondary shipping address",
+      "how to  set the new delivery address up",
+      "error setting the shipping address up"
+    ]
+  },
+  "switch_account": {
+    "category": "ACCOUNT",
+    "samples": [
+      "can ya help me to switch to the standard account",
+      "could I use the {{Account Type}} profile?",
+      "need help canging to the premium account"
+    ]
+  },
+  "track_order": {
+    "category": "ORDER",
+    "samples": [
+      "hlw do i check the ETA of purchase {{Order Number}}",
+      "where do i check the ETA of purchase {{Order Number}}",
+      "i want help to check order {{Order Number}} status"
+    ]
+  },
+  "track_refund": {
+    "category": "REFUND",
+    "samples": [
+      "could i know if there are any news on the refund",
+      "I have got to see my refund status, can you help me?",
+      "I expect a rebate of {{Refund Amount}} dollars"
+    ]
+  }
+}

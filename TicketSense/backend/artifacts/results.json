@@ -1,0 +1,105 @@
+{
+  "seed": 42,
+  "feature_set": "char_wb(2,5) TF-IDF ∪ Word2Vec(128, mean-pooled)",
+  "splits": {
+    "train": 19419,
+    "val": 2427,
+    "test": 2428
+  },
+  "deduped_from": 26872,
+  "best_model": "LinearSVC",
+  "best_params": {
+    "C": 10.0,
+    "class_weight": null
+  },
+  "cv_macro_f1": 0.9984,
+  "test_metrics": {
+    "model": "LinearSVC",
+    "params": "{\"C\": 10.0, \"class_weight\": null}",
+    "accuracy": 0.9984,
+    "macro-F1": 0.998,
+    "weighted-F1": 0.9984,
+    "errors": 4,
+    "n_test": 2428
+  },
+  "complementnb_char_only": {
+    "params": {
+      "alpha": 0.1
+    },
+    "cv_macro_f1": 0.9395
+  },
+  "grid_search": [
+    {
+      "model": "LinearSVC",
+      "best params": "{\"C\": 10.0, \"class_weight\": null}",
+      "CV macro-F1 (5-fold)": 0.9984,
+      "val macro-F1": 0.9996,
+      "val accuracy": 0.9996
+    },
+    {
+      "model": "LogisticRegression",
+      "best params": "{\"C\": 10.0, \"class_weight\": null}",
+      "CV macro-F1 (5-fold)": 0.9944,
+      "val macro-F1": 0.9918,
+      "val accuracy": 0.9922
+    }
+  ],
+  "benchmark": [
+    {
+      "feature": "tfidf_word",
+      "model": "LogisticRegression",
+      "val macro-F1": 0.9916,
+      "val accuracy": 0.9926,
+      "seconds": 0.9
+    },
+    {
+      "feature": "tfidf_word",
+      "model": "LinearSVC",
+      "val macro-F1": 0.9922,
+      "val accuracy": 0.9934,
+      "seconds": 0.6
+    },
+    {
+      "feature": "tfidf_char",
+      "model": "LogisticRegression",
+      "val macro-F1": 0.9971,
+      "val accuracy": 0.9975,
+      "seconds": 2.2
+    },
+    {
+      "feature": "tfidf_char",
+      "model": "LinearSVC",
+      "val macro-F1": 0.9987,
+      "val accuracy": 0.9992,
+      "seconds": 4.7
+    },
+    {
+      "feature": "tfidf_word_char",
+      "model": "LogisticRegression",
+      "val macro-F1": 0.9979,
+      "val accuracy": 0.9984,
+      "seconds": 2.4
+    },
+    {
+      "feature": "tfidf_word_char",
+      "model": "LinearSVC",
+      "val macro-F1": 0.9994,
+      "val accuracy": 0.9996,
+      "seconds": 6.3
+    },
+    {
+      "feature": "tfidf_char_w2v",
+      "model": "LogisticRegression",
+      "val macro-F1": 0.9954,
+      "val accuracy": 0.9959,
+      "seconds": 7.6
+    },
+    {
+      "feature": "tfidf_char_w2v",
+      "model": "LinearSVC",
+      "val macro-F1": 0.9996,
+      "val accuracy": 0.9996,
+      "seconds": 14.2
+    }
+  ]
+}
